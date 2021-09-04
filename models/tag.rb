@@ -24,8 +24,7 @@ class Tag
         tags = findTags(params)
         client = create_db_client
         tags.each do |tag|
-            puts tag
-            client.query("INSERT INTO tags (tag) values('#{@username}','#{@email}','#{@bio}')")
+            client.query("INSERT INTO tags (tag) values('#{tag}')")
         end 
     end 
 end 
