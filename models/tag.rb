@@ -3,7 +3,15 @@ require_relative "../function/extract_word.rb"
 
 class Tag
     def self.findTags(params)
-        
+        tags = extract_word(params)
+        word = []
+        tags.each do |tag|
+            if tag.include? "#"
+                word.push(tag) 
+            end 
+        end
+        tags = word
+        return tags 
     end
     
     def all
