@@ -11,6 +11,7 @@ class User
 
     def self.all
         client = create_db_client
+        time = Time.yesterday
         result = client.query("SELECT * FROM users")
         convert_sql_result_to_array(result)
     end

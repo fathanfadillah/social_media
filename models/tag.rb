@@ -1,13 +1,12 @@
-require 'require_all'
 require_relative "../function/extract_word.rb"
 require_relative  "../function/remove_duplicate.rb"
 require_relative "../database/db_connector.rb"
+require_relative "./time.rb"
 
 class Tag
     attr_reader :updated_at, :created_at,:tag, :id
 
     def initialize(params)
-        @id = params["id"]
         @tag = params["tag"]
         @created_at = params["created_at"]
         @updated_at = params["updated_at"]
@@ -26,8 +25,9 @@ class Tag
     end
     
     def self.all    
+        time = Time.yesterday
         client = create_db_client
-        result = client.query("SELECT * FROM tags GROUP BY tag ORDER BY created_at DESC LIMIT 5")
+        result = client.query("SELECT * FROM tags WHERE created_at >= '#{time}' GROUP BY tag ORDER BY created_at DESC LIMIT 5")
         convert_sql_result_to_array(result)
     end
 
