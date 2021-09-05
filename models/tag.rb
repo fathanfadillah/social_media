@@ -1,5 +1,6 @@
 require_relative "../database/db_connector.rb"
-require_relative "../function/extract_word.rb"
+require 'require_all'
+require_all "../function"
 
 class Tag
     def self.findTags(params)
@@ -22,12 +23,10 @@ class Tag
 
     def self.save(params)
         tags = findTags(params)
+        tags = remove_duplicate(tags)
         client = create_db_client
         tags.each do |tag|
             client.query("INSERT INTO tags (tag) values('#{tag}')")
         end 
     end 
-end 
-
-input = "user can see the list #of trending #hashtags."
-Tag.save(input)
+end
