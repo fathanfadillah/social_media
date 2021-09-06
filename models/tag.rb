@@ -34,18 +34,21 @@ class Tag
     def self.save(params)
         tags = findTags(params)
         tags = remove_duplicate(tags)
+        today = Time.now
         client = create_db_client
         tags.each do |tag|
-            client.query("INSERT INTO tags (tag) values('#{tag}')")
+            client.query("INSERT INTO tags (tag, created_at) values('#{tag}', '#{today}')")
         end 
     end
     
     def self.convert_sql_result_to_array(result)
         tags = Array.new
+        
         result.each do |data|
             rawData = Tag.new(data) 
             tags.push(rawData) 
         end
+        
         tags
     end
 end

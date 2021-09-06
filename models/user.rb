@@ -11,14 +11,15 @@ class User
 
     def self.all
         client = create_db_client
-        time = Time.yesterday
         result = client.query("SELECT * FROM users")
         convert_sql_result_to_array(result)
     end
 
     def save
+        today = Time.now
         client = create_db_client
-        result = client.query("INSERT INTO users (username, email, bio) values('#{@username}','#{@email}','#{@bio}')")
+        result = client.query("INSERT INTO users (username, email, bio, created_at) 
+                                values('#{@username}','#{@email}','#{@bio}','#{today}')")
     end 
         
     def self.convert_sql_result_to_array(result)
