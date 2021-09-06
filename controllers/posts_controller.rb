@@ -5,4 +5,8 @@ def save_post(param)
     if post.extension?
         post.save(param)
     end 
+end
+
+def get_post(filter)
+    post = Post.get(filter)
 end 
